@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <script>
+      var clientId = '280415793865-3ft5uf9bd05t0kah0c4oikgl7uksss17.apps.googleusercontent.com';
+      var developerKey = 'AIzaSyCoPnxgF_zOdkcXy3NqVfT8VajFOnfwBs8';
+      var accessToken;
+      var current_doc_id = "";
+      var current_doc=null;
+      var oldValue = "";
+
+
+      function onApiLoad() {
+        gapi.load('auth:client,drive-realtime,drive-share', authenticateWithGoogle);
+        gapi.load('picker');
+      }
+
+      function authenticateWithGoogle() {
+        window.gapi.auth.authorize({
+          'client_id': clientId,
+          'scope': ['https://www.googleapis.com/auth/drive']
+        }, handleAuthentication);
+      }
+
+      function handleAuthentication(result) {
+        if(result && !result.error) {
+          accessToken = result.access_token;
+          gapi.client.load('drive', 'v2',setupPicker);
+        }
+      }
+
+      function setupPicker() {
+        var picker = new google.picker.PickerBuilder()
+          .setOAuthToken(accessToken)
+          .setDeveloperKey(developerKey)
+          .addView(new google.picker.DocsView())
+          .setCallback(setupRealtime)
+          .build();
+        picker.setVisible(true);
+      }
+
+      function setupRealtime(data) {
+        if(data.docs != null){
+          current_doc_id = data.docs[0].id;
+          gapi.drive.realtime.load(current_doc_id, onFileLoaded, initializeModel);
+        }
+      }
+
+      function initializeModel(model) {
+        var request = gapi.client.drive.files.get({
+          'fileId': current_doc_id
+          });
+        request.execute(function(resp) {
+         downloadFile(resp,model, finishInit);
+        });
+      }
+
+      function downloadFile(file, model, callback) {
+        if (file.downloadUrl) {
+          var accessToken = gapi.auth.getToken().access_token;
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', file.downloadUrl);
+          xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+          xhr.onload = function() {
+            callback(xhr.responseText, model);
+          };
+          xhr.onerror = function() {
+            callback(null, null);
+          };
+          xhr.send();
+        } else {
+          callback(null, null);
+        }
+      }
+
+      function finishInit(info, model){
+        oldValue=info;
+        var string = model.createString(oldValue);
+        model.getRoot().set("text", string);
+      }
+
+      function onFileLoaded(doc, callback){
+        var code = doc.getModel().getRoot().get('text');
+        var editor = document.getElementById('editor');
+        gapi.drive.realtime.databinding.bindString(code, editor);
+        gapi.drive.realtime.databinding.bindString(code, example);
+        code.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, onStringChanged);
+        code.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, onStringChanged);
+        current_doc=doc;
+      }
+      
+      function log(info){
+        console.log(info);
+      }
+
+      function onStringChanged(evt){
+        editor=document.getElementById('editor');
+        current_doc.getModel().getRoot().set('text', editor.innerHTML);
+      }
+
+    </script>
+  </head>
+  <body>
+    <textarea id="editor"></textarea>
+    <textarea id="example"></textarea>
+  </body>
+  <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+</html>
