@@ -1426,6 +1426,12 @@ pre code {
   background-color: transparent;
   border-radius: 0;
 }
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
 .pre-scrollable {
   max-height: 340px;
   overflow-y: scroll;
