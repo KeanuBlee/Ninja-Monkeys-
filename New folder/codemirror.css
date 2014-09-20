@@ -1,22 +1,8 @@
 /* BASICS */
 
-
-@font-face {
-    font-family: 'droid_sans_monoregular';
-    src: url('droidsansmono-webfont.eot');
-    src: url('droidsansmono-webfont.eot?#iefix') format('embedded-opentype'),
-         url('droidsansmono-webfont.woff2') format('woff2'),
-         url('droidsansmono-webfont.woff') format('woff'),
-         url('droidsansmono-webfont.ttf') format('truetype'),
-         url('droidsansmono-webfont.svg#droid_sans_monoregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
-  font-family: 'droid_sans_monoregular';
+  font-family: monospace;
   height: 300px;
 }
 .CodeMirror-scroll {
@@ -24,11 +10,6 @@
   overflow: auto;
 }
 
-#mydiv {
-  border-size:10px;
-  border-color:black;
-  border-style: solid;
-}
 /* PADDING */
 
 .CodeMirror-lines {
@@ -150,10 +131,10 @@ div.CodeMirror-overwrite div.CodeMirror-cursor {}
 
 /* Default styles for common addons */
 
-div.CodeMirror span.CodeMirror-matchingbracket {color: #0f0;}
-div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
+div.CodeMirror span.CodeMirror-matchingbracket {color: white !important; text-decoration: underline;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {}
 .CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
-.CodeMirror-activeline-background {background: #e8f2ff;}
+.CodeMirror-activeline-background {background: #373831 !important;}
 
 /* STOP */
 
