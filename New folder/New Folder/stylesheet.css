@@ -1,0 +1,13 @@
+
+@font-face {
+    font-family: 'droid_sans_monoregular';
+    src: url('droidsansmono-webfont.eot');
+    src: url('droidsansmono-webfont.eot?#iefix') format('embedded-opentype'),
+         url('droidsansmono-webfont.woff2') format('woff2'),
+         url('droidsansmono-webfont.woff') format('woff'),
+         url('droidsansmono-webfont.ttf') format('truetype'),
+         url('droidsansmono-webfont.svg#droid_sans_monoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
