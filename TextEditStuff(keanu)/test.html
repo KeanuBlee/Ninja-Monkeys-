@@ -1,48 +1,138 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myModule">
 	<head>
-		<link rel="stylesheet" type="text/css" href="codemirror.css">
-		<link rel="stylesheet" type="text/css" href="3024-day.css">
-		<link rel="stylesheet" type="text/css" href="monokai.css">
-		<link rel="stylesheet" type="text/css" href="bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="bootstrap-theme.css">
-		<link rel="stylesheet" type="text/css" href="ambiance.css">
-		<link rel="stylesheet" type="text/css" href="cobalt.css">
-		<link rel="stylesheet" type="text/css" href="eclipse.css">
-		<link rel="stylesheet" type="text/css" href="elegant.css">
-		<link rel="stylesheet" type="text/css" href="erlang-dark.css">
-		<link rel="stylesheet" type="text/css" href="lesser-dark.css">
-		<link rel="stylesheet" type="text/css" href="mbo.css">
-		<link rel="stylesheet" type="text/css" href="mdn-like.css">
-		<link rel="stylesheet" type="text/css" href="midnight.css">
-		<link rel="stylesheet" type="text/css" href="neat.css">
-		<link rel="stylesheet" type="text/css" href="neo.css">
-		<link rel="stylesheet" type="text/css" href="night.css">
-		<link rel="stylesheet" type="text/css" href="paraiso-dark.css">
-		<link rel="stylesheet" type="text/css" href="paraiso-light.css">
-		<link rel="stylesheet" type="text/css" href="pastel-on-dark.css">
-		<link rel="stylesheet" type="text/css" href="rubyblue.css">
-		<link rel="stylesheet" type="text/css" href="solarized.css">
-		<link rel="stylesheet" type="text/css" href="the-matrix.css">
-		<link rel="stylesheet" type="text/css" href="tomorrow-night-eighties.css">
-		<link rel="stylesheet" type="text/css" href="twilight.css">
-		<link rel="stylesheet" type="text/css" href="vibrant-ink.css">
-		<link rel="stylesheet" type="text/css" href="xq-dark.css">
-		<link rel="stylesheet" type="text/css" href="xq-light.css">
- 		<script src="codemirror.js"></script>
-		<script src="javascript.js"></script>
-		<script src="angular.min.js"></script>
-		<script src="app.js"></script>
-		<script src="css.js"></script>
-		<script src="html.js"></script>
-		<script src="python.js"></script>
-		<script src="http://code.jquery.com/jquery.js"></script>
-		<script src="bootstrap.js"></script>
+
+        <!-- BEGIN IMPORT THEMES -->
+
+		<link rel="stylesheet" type="text/css" href="css/themes/3024-day.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/monokai.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/ambiance.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/cobalt.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/eclipse.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/elegant.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/erlang-dark.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/lesser-dark.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/mbo.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/mdn-like.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/midnight.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/neat.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/neo.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/night.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/paraiso-dark.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/paraiso-light.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/pastel-on-dark.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/rubyblue.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/solarized.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/the-matrix.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/tomorrow-night-eighties.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/twilight.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/vibrant-ink.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/xq-dark.css">
+		<link rel="stylesheet" type="text/css" href="css/themes/xq-light.css">
+
+        <!-- END IMPORT THEMES -->
+
+        <link rel="stylesheet" type="text/css" href="css/codemirror/codemirror.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css">
+        <link rel="stylesheet" type="text/css" href="css/droid_sans_mono/stylesheet.css">
+ 		<script src="js/codemirror/codemirror.js"></script>
+		<script src="js/angular/angular.min.js"></script>
+		<script src="js/angular/app.js"></script>
+        <script src="http://code.jquery.com/jquery.js"></script>
+        <script src="js/bootstrap/bootstrap.js"></script>
+
+        <!-- BEGIN IMPORT MODES -->
+
+        <script src="js/modes/apl.js"></script>
+        <script src="js/modes/asterisk.js"></script>
+        <script src="js/modes/clike.js"></script>
+        <script src="js/modes/clojure.js"></script>
+        <script src="js/modes/cobol.js"></script>
+        <script src="js/modes/coffeescript.js"></script>
+        <script src="js/modes/commonlisp.js"></script>
+        <script src="js/modes/css.js"></script>
+        <script src="js/modes/cypher.js"></script>
+        <script src="js/modes/d.js"></script>
+        <script src="js/modes/diff.js"></script>
+        <script src="js/modes/django.js"></script>
+        <script src="js/modes/dtd.js"></script>
+        <script src="js/modes/dylan.js"></script>
+        <script src="js/modes/ecl.js"></script>
+        <script src="js/modes/eiffel.js"></script>
+        <script src="js/modes/erlang.js"></script>
+        <script src="js/modes/fortran.js"></script>
+        <script src="js/modes/gas.js"></script>
+        <script src="js/modes/gfm.js"></script>
+        <script src="js/modes/gherkin.js"></script>
+        <script src="js/modes/go.js"></script>
+        <script src="js/modes/groovy.js"></script>
+        <script src="js/modes/haml.js"></script>
+        <script src="js/modes/haskell.js"></script>
+        <script src="js/modes/haxe.js"></script>
+        <script src="js/modes/htmlembedded.js"></script>
+        <script src="js/modes/htmlmixed.js"></script>
+        <script src="js/modes/http.js"></script>
+        <script src="js/modes/jade.js"></script>
+        <script src="js/modes/javascript.js"></script>
+        <script src="js/modes/jinja2.js"></script>
+        <script src="js/modes/julia.js"></script>
+        <script src="js/modes/kotlin.js"></script>
+        <script src="js/modes/livescript.js"></script>
+        <script src="js/modes/lua.js"></script>
+        <script src="js/modes/markdown.js"></script>
+        <script src="js/modes/mirc.js"></script>
+        <script src="js/modes/mllike.js"></script>
+        <script src="js/modes/modelica.js"></script>
+        <script src="js/modes/nginx.js"></script>
+        <script src="js/modes/ntriples.js"></script>
+        <script src="js/modes/octave.js"></script>
+        <script src="js/modes/pascal.js"></script>
+        <script src="js/modes/pegjs.js"></script>
+        <script src="js/modes/perl.js"></script>
+        <script src="js/modes/php.js"></script>
+        <script src="js/modes/pig.js"></script>
+        <script src="js/modes/properties.js"></script>
+        <script src="js/modes/puppet.js"></script>
+        <script src="js/modes/python.js"></script>
+        <script src="js/modes/q.js"></script>
+        <script src="js/modes/r.js"></script>
+        <script src="js/modes/rpm.js"></script>
+        <script src="js/modes/rst.js"></script>
+        <script src="js/modes/ruby.js"></script>
+        <script src="js/modes/rust.js"></script>
+        <script src="js/modes/sass.js"></script>
+        <script src="js/modes/scheme.js"></script>
+        <script src="js/modes/shell.js"></script>
+        <script src="js/modes/sieve.js"></script>
+        <script src="js/modes/slim.js"></script>
+        <script src="js/modes/smalltalk.js"></script>
+        <script src="js/modes/smarty.js"></script>
+        <script src="js/modes/smartymixed.js"></script>
+        <script src="js/modes/solr.js"></script>
+        <script src="js/modes/sparql.js"></script>
+        <script src="js/modes/sql.js"></script>
+        <script src="js/modes/stex.js"></script>
+        <script src="js/modes/tcl.js"></script>
+        <script src="js/modes/toml.js"></script>
+        <script src="js/modes/turtle.js"></script>
+        <script src="js/modes/vb.js"></script>
+        <script src="js/modes/vbscript.js"></script>
+        <script src="js/modes/velocity.js"></script>
+        <script src="js/modes/verilog.js"></script>
+        <script src="js/modes/xml.js"></script>
+        <script src="js/modes/xquery.js"></script>
+        <script src="js/modes/yaml.js"></script>
+        <script src="js/modes/z80.js"></script>
+
+        <!-- END IMPORT MODES -->
+
   		<script>
   			var changeTheme = function(theme) {
   				editor.setOption("theme", theme);
   			}
   		</script>
+
 	</head>
 	<body style="font-family: Arial" ng-controller = "LanguageController as language">
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
@@ -223,7 +313,6 @@
 			<script> 
 					CodeMirror.modeURL = "../mode/%N/%N.js";
 
-					//var modeInput = document.getElementById("mode");
 					
 					var editor = CodeMirror.fromTextArea(document.getElementById("myTextArea"), {
 					  lineNumbers: true,
