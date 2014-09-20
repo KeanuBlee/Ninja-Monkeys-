@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+	<head>
+		<link rel="stylesheet" type="text/css" href="codemirror.css">
+		<link rel="stylesheet" type="text/css" href="3024-day.css">
+		<link rel="stylesheet" type="text/css" href="monokai.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap-theme.css">
+		<link rel="stylesheet" type="text/css" href="ambiance.css">
+		<link rel="stylesheet" type="text/css" href="cobalt.css">
+		<link rel="stylesheet" type="text/css" href="eclipse.css">
+		<link rel="stylesheet" type="text/css" href="elegant.css">
+		<link rel="stylesheet" type="text/css" href="erlang-dark.css">
+		<link rel="stylesheet" type="text/css" href="lesser-dark.css">
+		<link rel="stylesheet" type="text/css" href="mbo.css">
+		<link rel="stylesheet" type="text/css" href="mdn-like.css">
+		<link rel="stylesheet" type="text/css" href="midnight.css">
+		<link rel="stylesheet" type="text/css" href="neat.css">
+		<link rel="stylesheet" type="text/css" href="neo.css">
+		<link rel="stylesheet" type="text/css" href="night.css">
+		<link rel="stylesheet" type="text/css" href="paraiso-dark.css">
+		<link rel="stylesheet" type="text/css" href="paraiso-light.css">
+		<link rel="stylesheet" type="text/css" href="pastel-on-dark.css">
+		<link rel="stylesheet" type="text/css" href="rubyblue.css">
+		<link rel="stylesheet" type="text/css" href="solarized.css">
+		<link rel="stylesheet" type="text/css" href="the-matrix.css">
+		<link rel="stylesheet" type="text/css" href="tomorrow-night-eighties.css">
+		<link rel="stylesheet" type="text/css" href="twilight.css">
+		<link rel="stylesheet" type="text/css" href="vibrant-ink.css">
+		<link rel="stylesheet" type="text/css" href="xq-dark.css">
+		<link rel="stylesheet" type="text/css" href="xq-light.css">
+ 		<script src="codemirror.js"></script>
+		<script src="javascript.js"></script>
+		<script src="angular.min.js"></script>
+		<script src="app.js"></script>
+		<script src="css.js"></script>
+		<script src="html.js"></script>
+		<script src="python.js"></script>
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="bootstrap.js"></script>
+  		<script>
+  			var changeTheme = function(theme) {
+  				editor.setOption("theme", theme);
+  			}
+  		</script>
+	</head>
+	<body style="font-family: Arial" ng-controller = "LanguageController as language">
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" id="title" onclick="renameFile()" href="javascript:void(0);">Untitled...</a>
+	        </div>
+
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	           <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">File <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	                <li class="dropdown"><a onclick="s.showSettingsDialog()" href="javascript:void(0);">Share...</a></li>
+	                <li class="divider"/>
+	                <li>
+	                	<a href="#">New...</a>
+	                </li>
+	                <li>
+	                	<a href="#">Open</a>
+	               	</li>
+	                <li>
+	                	<a href="#"> Rename</a>
+	                </li>
+	                <li class="dropdown-header">
+	                	Nav header
+	                </li>
+	                <li>
+	                	<a href="#">Separated link</a>
+	                </li>
+	                <li>
+	                	<a href="#">One more separated link</a>
+	                </li>
+	              </ul>
+	            </li>
+	            <li>
+	            	<a href="#about">Edit</a>
+	            </li>
+	            <li>
+	            	<a href="#contact">Contact</a>
+	            </li>
+	            <li class="dropdown">
+	              <a href="" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	              <li>
+	                <li class="dropdown-submenu">
+    					<a tabindex="-1" href="">Themes</a>
+    					<ul class="dropdown-menu">
+      						<li>
+      							<a href="#" onclick=changeTheme('monokai')>Default</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('3024-day')>3024 day</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('3024-night')>3024 night</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('ambiance')>Ambiance</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('base16-dark')>Base16 dark</a>
+      						</li>
+      						<li>
+      							<a href="#"onclick=changeTheme('base16-light')>Base16 light</a>
+      						</li>
+      						<li>
+      							<a href="#"onclick=changeTheme('blackboard')>Blackboard</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('cobalt')>Cobalt
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('eclipse')>Eclipse
+      							</a>
+      						</li>
+      						<li> 
+      							<a href="#" onclick=changeTheme('elegant')>Elegant
+      							</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('erlang-dark')>Erlang Dark</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('lesser-dark')>Lesser Dark</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('mbo')>MBO</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('mdn-like')>MDN-like</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('midnight')> Midnight</a>
+      						</li>
+      						<li>
+      							<a href="#" onclick=changeTheme('neat')> Neat </a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('neo')> Neo</a>
+      						</li>
+      						<li> 
+      							<a href='#' onclick=changeTheme('night')>Night</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('paraiso-dark')>Paraiso-Dark</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('paraiso-light')> Paraiso Light</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('pastel-on-dark')> Pastel On Dark</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('rubyblue')>RubyBlue</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('solarized')>Solarized</a>
+      						</li>
+      						<li> 
+      							<a href='#' onclick=changeTheme('the-matrix')>The Matrix</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('tomorrow-night-eighties')> Tomorrow Night Eighties </a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('twilight')> Twilight</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('vibrant-ink')>Vibrant Ink</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('xq-dark')>XQ Dark</a>
+      						</li>
+      						<li>
+      							<a href='#' onclick=changeTheme('xq-light')>XQ Light</a>
+      						</li>
+      					</ul>
+  					</li>
+  					<li class="dropdown-submenu">
+  					<a href=''>Language</a>
+  						 <ul class="dropdown-menu" role="menu">
+	                <li class="dropdown">
+	                	<li ng-repeat="product in language.products" ng-click = "language.setOption($index)">
+	                	<a href="#">{{product.name}}</a></li>
+		            </li>
+		            </ul>
+  					</li>
+	              </ul>
+	            </li>
+	          </ul>
+	          <ul class="nav navbar-nav navbar-right">
+	            <li>
+	            	<a href="../navbar/">Default</a>
+	            </li>
+	            <li class="active">
+	            	<a href="./">Static top</a>
+	            </li>
+	            <li>
+	            	<a href="../navbar-fixed-top/">Fixed top</a>
+	            </li>
+	          </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+		<div class="col-md-3" id="myUselessDivs"></div>
+		<div class="col-md-6">
+			<div id="mydiv">
+			<textarea id="myTextArea" class="form-control" rows="3"></textarea> 
+		<div style="font-family: droid_sans_monoregular">
+			<script> 
+					CodeMirror.modeURL = "../mode/%N/%N.js";
+
+					//var modeInput = document.getElementById("mode");
+					
+					var editor = CodeMirror.fromTextArea(document.getElementById("myTextArea"), {
+					  lineNumbers: true,
+					  theme: 'monokai',
+					  mode: 'python'
+					});
+					CodeMirror.on(modeInput, "keypress", function(e) {
+					  if (e.keyCode == 13) change();
+					});
+					function change(mode) {
+						if (mode.length = null){
+							editor.setOption("mode", modeInput.value);
+					   		CodeMirror.autoLoadMode(editor, modeInput.value);
+						}
+					   	else {
+					   		editor.setOption("mode", mode);
+					   		CodeMirror.autoLoadMode(editor, mode);
+					   	}
+					}
+					</script>
+				</script>
+			</div>
+		</div>
+		</div>
+		<div class="col-md-3" id="myUselessDivs2"></div>
+
+
+
+
+	</body>
+	</html>

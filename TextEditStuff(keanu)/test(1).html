@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "myModule">
+	<head>
+		<link rel="stylesheet" type="text/css" href="codemirror.css">
+		<link rel="stylesheet" type="text/css" href="monokai.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="bootstrap-theme.css">
+		<script src="codemirror.js"></script>
+		<script src="angular.min.js"></script>
+		<script src="app.js"></script>
+		<script src="javascript.js"></script>
+		<script src="css.js"></script>
+		<script src="python.js"></script>
+		<script src="http://code.jquery.com/jquery.js"></script>
+		<script src="bootstrap.js"></script>
+	</head>
+	<body style="font-family: Arial" ng-controller = "LanguageController as language">
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	          <a class="navbar-brand" href="#">Project name</a>
+	        </div>
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            <li class="active"><a href="#">Home</a></li>
+	            <li><a href="#about">About</a></li>
+	            <li><a href="#contact">Contact</a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	                <li class="dropdown">
+	                	<li ng-repeat="product in language.products" ng-click = "language.setOption($index)"><a href="#">{{product.name}}</a></li>
+		            </li>
+	            <!--     <li><a href="#">Another action</a></li>
+	                <li><a href="#">Something else here</a></li>
+	                <li class="divider"></li>
+	                <li class="dropdown-header">Nav header</li>
+	                <li><a href="#">Separated link</a></li>
+	                <li><a href="#">One more separated link</a></li> -->
+	              </ul>
+	            </li>
+	          </ul>
+	          <ul class="nav navbar-nav navbar-right">
+	            <li><a href="../navbar/">Default</a></li>
+	            <li class="active"><a href="./">Static top</a></li>
+	            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+	          </ul>
+	        </div><!--/.nav-collapse -->
+	      </div>
+	    </div>
+		<p style="font-size: 30px">
+			Check out my text box
+		</p>
+		
+		<div style="border: solid #888888 1.5px; border-radius: 4px; padding: 1px">
+			<textarea id="myTextArea" name= "code" class="form-control" rows="3"></textarea> 
+		</div>
+		<div style="font-family: droid_sans_monoregular">
+			<script> 
+					CodeMirror.modeURL = "../mode/%N/%N.js";
+
+					//var modeInput = document.getElementById("mode");
+					
+					var editor = CodeMirror.fromTextArea(document.getElementById("myTextArea"), {
+					  lineNumbers: true,
+					  theme: 'monokai',
+					  mode: 'python'
+					});
+					CodeMirror.on(modeInput, "keypress", function(e) {
+					  if (e.keyCode == 13) change();
+					});
+					function change(mode) {
+						if (mode.length = null){
+							editor.setOption("mode", modeInput.value);
+					   		CodeMirror.autoLoadMode(editor, modeInput.value);
+						}
+					   	else {
+					   		editor.setOption("mode", mode);
+					   		CodeMirror.autoLoadMode(editor, mode);
+					   	}
+					}
+					
+				</script>
+			</script>
+		</div>
+
+		
+
+
+	</body>
+	</html>
