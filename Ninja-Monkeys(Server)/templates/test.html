@@ -134,7 +134,7 @@
   		</script>
 
 	</head>
-	<body style="font-family: Arial" ng-controller = "LanguageController as language">
+	<body style="font-family: Arial" ng-controller = "LanguageController as language" onkeypress="onLocalEdit()">
 		<div class="navbar navbar-default navbar-static-top" role="navigation">
 	      <div class="container">
 	        <div class="navbar-header">
@@ -308,39 +308,171 @@
 		<div class="col-md-2" id="myUselessDivs"></div>
 		<div class="col-md-8">
 			<div id="mydiv">
-			<textarea id="myTextArea" class="form-control" rows="3"></textarea> 
+			<textarea id="myTextArea" class="form-control" rows="3" ></textarea> 
 		<div style="font-family: droid_sans_monoregular">
-			<script> 
-					CodeMirror.modeURL = "../mode/%N/%N.js";
-
-					
-					var editor = CodeMirror.fromTextArea(document.getElementById("myTextArea"), {
-					  lineNumbers: true,
-					  theme: 'monokai',
-					  mode: 'python'
-					});
-					CodeMirror.on(modeInput, "keypress", function(e) {
-					  if (e.keyCode == 13) change();
-					});
-					function change(mode) {
-						if (mode.length = null){
-							editor.setOption("mode", modeInput.value);
-					   		CodeMirror.autoLoadMode(editor, modeInput.value);
-						}
-					   	else {
-					   		editor.setOption("mode", mode);
-					   		CodeMirror.autoLoadMode(editor, mode);
-					   	}
-					}
-					</script>
-				</script>
 			</div>
 		</div>
 		</div>
 		<div class="col-md-2" id="myUselessDivs2"></div>
+<script>
 
 
+      var clientId = '280415793865-3ft5uf9bd05t0kah0c4oikgl7uksss17.apps.googleusercontent.com';
+      var developerKey = 'AIzaSyCoPnxgF_zOdkcXy3NqVfT8VajFOnfwBs8';
+      var accessToken;
+      var current_doc_id = '<%<id>%>';
+      var current_doc=null;
+      var oldValue = "";
+      var EDIT_MODE = false;
 
 
-	</body>
-	</html>
+      function onApiLoad() {
+        gapi.load('auth:client,drive-realtime,drive-share', authenticateWithGoogle);
+        if(current_doc_id==''){
+          gapi.load('picker');
+        }
+      }
+
+      function authenticateWithGoogle() {
+        window.gapi.auth.authorize({
+          'client_id': clientId,
+          'scope': ['https://www.googleapis.com/auth/drive']
+        }, handleAuthentication);
+      }
+
+      function handleAuthentication(result) {
+        if(result && !result.error) {
+          accessToken = result.access_token;
+          gapi.client.load('drive', 'v2',setupPicker);
+        }
+      }
+
+      function setupPicker() {
+        if(current_doc_id==''){
+          var picker = new google.picker.PickerBuilder()
+            .setOAuthToken(accessToken)
+            .setDeveloperKey(developerKey)
+            .addView(new google.picker.DocsView())
+            .setCallback(setupRealtime)
+            .build();
+          picker.setVisible(true);
+        } else {
+          setupRealtime();
+        }
+      }
+
+      function setupRealtime(data) {
+        if(data.docs!=null){
+          current_doc_id = data.docs[0].id;
+        }
+        if(current_doc_id!=''){
+          gapi.drive.realtime.load(current_doc_id, onFileLoaded, initializeModel);
+        }
+      }
+
+      function initializeModel(model) {
+        var request = gapi.client.drive.files.get({
+          'fileId': current_doc_id
+          });
+        request.execute(function(resp) {
+         downloadFile(resp,model, finishInit); 
+        });
+      }
+
+      function downloadFile(file, model, callback) {
+        if (file.downloadUrl) {
+          var accessToken = gapi.auth.getToken().access_token;
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', file.downloadUrl);
+          xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+          xhr.onload = function() {
+            callback(xhr.responseText, model);
+          };
+          xhr.onerror = function() {
+            callback(null, null);
+          };
+          xhr.send();
+        } else {
+          callback(null, null);
+        }
+      }
+
+      function finishInit(info, model){
+        oldValue=info;
+        var string = model.createString(oldValue);
+        model.getRoot().set("text", string);
+      }
+
+      function onFileLoaded(doc, callback){
+        var code = doc.getModel().getRoot().get('text');
+        // code.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, onLocalEdit);
+        // code.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, onLocalEdit);
+        current_doc=doc;
+        EDIT_MODE=true;
+        onRemoteEdit(null); 
+      }
+      
+      function log(info){
+        console.log(info);
+      }
+
+      function onRemoteEdit(evt){
+        if(EDIT_MODE==true){
+          log("onRemoteEdit");
+
+          if(current_doc.getModel().getRoot().get('text')!=undefined){
+            // if(current_doc.getModel().getRoot().get('text').getText()!=undefined){
+            //   editor.setValue(current_doc.getModel().getRoot().get('text').getText());
+            // } else {
+              console.log(current_doc.getModel().getRoot());
+              console.log(current_doc.getModel().getRoot().get('text'));
+              editor.setValue(current_doc.getModel().getRoot().get('text'));
+            // }
+          } 
+        }
+      }
+      function onLocalEdit(evt){
+        if(EDIT_MODE==true){
+          log("onLocalEdit");
+          current_doc.getModel().getRoot().set('text', editor.getValue());
+        }
+      }
+
+      function saveToDrive(){
+        if(EDIT_MODE==true){
+          var xmlhttpp = new XMLHttpRequest();
+          xmlhttpp.open("PUSH","https://www.googleapis.com/upload/drive/v2/files/"+current_doc_id,false);
+          xmlhttpp.setRequestHeader('Content-Type', 'media');
+          xmlhttpp.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+          xmlhttpp.setRequestHeader('Access-Control-Allow-Origin', 'https://www.googleapis.com/upload/drive/v2/files/' + current_doc_id);
+          xmlhttpp.send();
+        }
+      }
+
+      CodeMirror.modeURL = "../mode/%N/%N.js";
+
+          var editor = CodeMirror.fromTextArea(document.getElementById("myTextArea"), {
+            lineNumbers: true,
+            theme: 'monokai',
+            mode: 'python'
+          });
+          CodeMirror.on(modeInput, "keypress", function(e) {
+            if (e.keyCode == 13) change();
+          });
+          // editor.setOption('onChange', function(info1, info2){console.log("yo");} );
+          function change(mode) {
+            if (mode.length = null){
+              editor.setOption("mode", modeInput.value);
+                CodeMirror.autoLoadMode(editor, modeInput.value);
+            }
+              else {
+                editor.setOption("mode", mode);
+                CodeMirror.autoLoadMode(editor, mode);
+              }
+          }
+
+
+  </script>
+<script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+</body>
+</html>
