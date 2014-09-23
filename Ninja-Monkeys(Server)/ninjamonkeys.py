@@ -35,7 +35,7 @@ class HomeHandler(webapp2.RequestHandler):
         template_values = {'id': ids[0]}
       else:
         template_values={'id': ''}
-      template = jinja_environment.get_template('templates/test.html')
+      template = jinja_environment.get_template('templates/re-develop.html')
       self.response.out.write(template.render(template_values))
         
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
