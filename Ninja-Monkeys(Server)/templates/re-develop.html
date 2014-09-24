@@ -1,14 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Google Drive Realtime quickstart</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=9">
-
+  <title>Realtime testing</title>
   <!-- Load the Realtime libraries. -->
   <script type="text/javascript"
           src="https://apis.google.com/js/api.js"></script>
-
   <!-- Load the utility library. -->
   <script type="text/javascript"
           src="static/realtime-client-utils.js"></script>
@@ -21,9 +17,6 @@
 
   <button id="authorizeButton" disabled>You must authorize</button>
 
-  <p>These text areas are on the same page. You can also <a target="_blank" href="#">open them on separate users'
-  browsers</a> and they will remain synchronized.</p>
-
   <!-- Text areas that will be used as our collaborative controls. -->
   <textarea id="editor1" rows="15" cols="50" disabled="true"></textarea>
   <textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>
@@ -34,6 +27,7 @@
   <button id="redoButton" disabled>Redo</button>
 
   <script>
+  var realtimeLoader=null;
     /**
      * This function is called the first time that the Realtime model is created
      * for a file. This function should be used to initialize any values of the
@@ -43,8 +37,9 @@
      * @param model {gapi.drive.realtime.Model} the Realtime root model object.
      */
     function initializeModel(model) {
-      var string = model.createString('Hello Realtime World!');
-      model.getRoot().set('text', string);
+      console.log(realtimeLoader.oldText);
+      var string = model.createString(realtimeLoader.oldText);
+      model.getRoot().set("text", string);
     }
 
     /**
@@ -55,7 +50,9 @@
      * @param doc {gapi.drive.realtime.Document} the Realtime document.
      */
     function onFileLoaded(doc) {
+      console.log('we are loading a file');
       var string = doc.getModel().getRoot().get('text');
+      console.log('we have a string obj');
 
       // Keeping one box updated with a String binder.
       var textArea1 = document.getElementById('editor1');
@@ -153,7 +150,7 @@
      * Start the Realtime loader with the options.
      */
     function startRealtime() {
-      var realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
+      realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
       realtimeLoader.start();
     }
 

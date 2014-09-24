@@ -63,16 +63,20 @@ rtclient.REALTIME_MIMETYPE = 'application/vnd.google-apps.drive-sdk';
  */
 rtclient.getParams = function() {
   var params = {};
-  var hashFragment = window.location.hash;
-  if (hashFragment) {
-    // split up the query string and store in an object
-    var paramStrs = hashFragment.slice(1).split("&");
+  var queryFragment = window.location.search;
+  console.log(queryFragment);
+  if (queryFragment) {
+  } else {
+    var queryFragment = window.location.hash;
+  }
+  if(queryFragment){
+    var paramStrs = queryFragment.slice(1).split("&");
     for (var i = 0; i < paramStrs.length; i++) {
       var paramStr = paramStrs[i].split("=");
       params[paramStr[0]] = unescape(paramStr[1]);
+      console.log(paramStr[0] + ": " + unescape(paramStr[1]));
     }
   }
-  console.log(params);
   return params;
 }
 
@@ -95,7 +99,7 @@ rtclient.getOption = function(options, key, defaultValue) {
   if (value == undefined) {
     console.error(key + ' should be present in the options.');
   }
-  console.log(value);
+  // console.log(value);
   return value;
 }
 
@@ -157,7 +161,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
       user_id: userId,
       immediate: false
     }, handleAuthResult);
-    console.log(clientId);
+    // console.log(clientId);
   };
 
   // Try with no popups first.
@@ -209,7 +213,6 @@ rtclient.createRealtimeFile = function(title, mimeType, callback) {
     }).execute(callback);
   });
 }
-
 
 /**
  * Fetches the metadata for a Realtime file.
@@ -285,6 +288,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   if (userId) {
     params.push('userId=' + userId);
   }
+  alert('redirect');
 
   // Naive URL construction.
   var newUrl = params.length == 0 ? './' : ('./#' + params.join('&'));
@@ -297,7 +301,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   // We are still here that means the page didn't reload.
   rtclient.params = rtclient.getParams();
   for (var index in fileIds) {
-    gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
+    this.load();
   }
 }
 
@@ -341,6 +345,7 @@ rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
  * parameters.
  */
 rtclient.RealtimeLoader.prototype.load = function() {
+  console.log("loading");
   var fileIds = rtclient.params['fileIds'];
   if (fileIds) {
     fileIds = fileIds.split(',');
@@ -351,18 +356,21 @@ rtclient.RealtimeLoader.prototype.load = function() {
   // Creating the error callback.
   var authorizer = this.authorizer;
 
-
   // We have file IDs in the query parameters, so we will use them to load a file.
+  self=this;
   if (fileIds) {
-    for (var index in fileIds) {
-      gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
-    }
-    return;
+    this.getFile(function(txt){
+      self.oldText=txt;
+      console.log('we have file ids');
+      gapi.drive.realtime.load(String(fileIds), self.onFileLoaded, self.initializeModel, self.handleErrors);
+      return;
+      });
   }
 
   // We have a state parameter being redirected from the Drive UI. We will parse
   // it and redirect to the fileId contained.
   else if (state) {
+    console.log('redirected from drive');
     var stateObj = rtclient.parseState(state);
     // If opening a file from Drive.
     if (stateObj.action == "open") {
@@ -377,8 +385,36 @@ rtclient.RealtimeLoader.prototype.load = function() {
     this.createNewFileAndRedirect();
   }
 }
-
-
+rtclient.RealtimeLoader.prototype.getFile = function(callback){
+  self = this;
+  console.log("ID0: "+rtclient.params['fileIds']);
+  gapi.client.load('drive', 'v2', function() {
+    gapi.client.drive.files.get({
+      'fileId' : rtclient.params['fileIds']
+    }).execute(function(resp) {
+      self.downloadFile(resp, callback);
+    });
+  });
+}
+rtclient.RealtimeLoader.prototype.downloadFile = function(file, callback) {
+  console.log("FILE:");
+  console.log(file);
+  if (file.downloadUrl) {
+    var accessToken = gapi.auth.getToken().access_token;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', file.downloadUrl);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    xhr.onload = function() {
+      callback(xhr.responseText);
+    };
+    xhr.onerror = function() {
+      callback('error');
+    };
+    xhr.send();
+  } else {
+    callback('no link');
+  }
+}
 /**
  * Creates a new file and redirects to the URL to load it.
  */
