@@ -37,7 +37,8 @@
      * @param model {gapi.drive.realtime.Model} the Realtime root model object.
      */
     function initializeModel(model) {
-      console.log(realtimeLoader.oldText);
+      // console.log("initializing model: " + model);
+      // console.log(realtimeLoader.oldText);
       var string = model.createString(realtimeLoader.oldText);
       model.getRoot().set("text", string);
     }

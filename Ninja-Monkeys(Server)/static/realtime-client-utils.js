@@ -57,6 +57,8 @@ rtclient.OPENID_SCOPE = 'openid'
 rtclient.REALTIME_MIMETYPE = 'application/vnd.google-apps.drive-sdk';
 
 
+rtclient.DEVELOPER_KEY = 'AIzaSyCoPnxgF_zOdkcXy3NqVfT8VajFOnfwBs8';
+
 /**
  * Parses the hash parameters to this page and returns them as an object.
  * @function
@@ -65,9 +67,8 @@ rtclient.getParams = function() {
   var params = {};
   var queryFragment = window.location.search;
   console.log(queryFragment);
-  if (queryFragment) {
-  } else {
-    var queryFragment = window.location.hash;
+  if (!queryFragment) {
+    queryFragment = window.location.hash;
   }
   if(queryFragment){
     var paramStrs = queryFragment.slice(1).split("&");
@@ -183,6 +184,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
  * @param callback {Function} the callback to call after user ID has been
  *     fetched.
  */
+
 rtclient.Authorizer.prototype.fetchUserId = function(callback) {
   var _this = this;
   gapi.client.load('oauth2', 'v2', function() {
@@ -231,7 +233,6 @@ rtclient.getFileMetadata = function(fileId, callback) {
   });
 }
 
-
 /**
  * Parses the state parameter passed from the Drive user interface after Open
  * With operations.
@@ -247,6 +248,18 @@ rtclient.parseState = function(stateParam) {
   }
 }
 
+rtclient.setupPicker = function(pickerCallback, callback) {
+  gapi.load('picker', function(){
+    rtclient.picker = new google.picker.PickerBuilder()
+      .setOAuthToken(gapi.auth.getToken().access_token)
+      .setDeveloperKey(rtclient.DEVELOPER_KEY)
+      .addView(new google.picker.DocsView())
+      .setCallback(pickerCallback)
+      .build();
+    rtclient.picker.setVisible(false);
+    callback();
+  });
+}
 
 /**
  * Handles authorizing, parsing query parameters, loading and creating Realtime
@@ -282,16 +295,20 @@ rtclient.RealtimeLoader = function(options) {
  */
 rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   var params = [];
+  console.log(fileIds);
   if (fileIds) {
+    console.log("we have file ids");
     params.push('fileIds=' + fileIds.join(','));
   }
   if (userId) {
+    console.log("we have user id");
     params.push('userId=' + userId);
   }
   alert('redirect');
 
   // Naive URL construction.
   var newUrl = params.length == 0 ? './' : ('./#' + params.join('&'));
+  console.log(newUrl);
   // Using HTML URL re-write if available.
   if (window.history && window.history.replaceState) {
     window.history.replaceState("Google Drive Realtime API Playground", "Google Drive Realtime API Playground", newUrl);
@@ -365,8 +382,7 @@ rtclient.RealtimeLoader.prototype.load = function() {
       gapi.drive.realtime.load(String(fileIds), self.onFileLoaded, self.initializeModel, self.handleErrors);
       return;
       });
-  }
-
+  } 
   // We have a state parameter being redirected from the Drive UI. We will parse
   // it and redirect to the fileId contained.
   else if (state) {
@@ -379,6 +395,18 @@ rtclient.RealtimeLoader.prototype.load = function() {
       this.redirectTo(fileIds, userId);
       return;
     }
+  } 
+  // no parameters so use a picker
+  else {
+    console.log('using picker');
+    self=this;
+    rtclient.setupPicker(function(data){
+      console.log([data.docs[0].id]);
+      fileIds = [data.docs[0].id];
+      self.redirectTo(fileIds, rtclient.params['userId']);
+    }, function(){
+      rtclient.picker.setVisible(true);
+    });
   }
 
   if (this.autoCreate) {
