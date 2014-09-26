@@ -424,6 +424,50 @@ rtclient.RealtimeLoader.prototype.getFile = function(callback){
     });
   });
 }
+// eliminate need fo file string arg
+rtclient.RealtimeLoader.prototype.saveFile = function(fileString, callback){
+  gapi.client.load('drive', 'v2', function() {
+    var id = rtclient.params['fileIds'];
+    rtclient.getFileMetadata(id, function(meta){
+      updateFile(id, meta, fileString, callback);
+    });
+  });
+}
+
+function updateFile(fileId, fileMetadata, fileString, callback) {
+  var boundary = '-------314159265358979323846';
+  var delimiter = "\r\n--" + boundary + "\r\n";
+  var close_delim = "\r\n--" + boundary + "--";
+  var contentType = 'application/vnd.google-apps.unknown';
+
+  var base64Data = btoa(fileString);
+  var multipartRequestBody =
+      delimiter +
+      'Content-Type: application/json\r\n\r\n' +
+      JSON.stringify(fileMetadata) +
+      delimiter +
+      'Content-Type: ' + contentType + '\r\n' +
+      'Content-Transfer-Encoding: base64\r\n' +
+      '\r\n' +
+      base64Data +
+      close_delim;
+
+  var request = gapi.client.request({
+      'path': '/upload/drive/v2/files/' + fileId,
+      'method': 'PUT',
+      'params': {'uploadType': 'multipart', 'alt': 'json'},
+      'headers': {
+        'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
+      },
+      'body': multipartRequestBody});
+  if (!callback) {
+    callback = function(file) {
+      console.log(file)
+    };
+  }
+  request.execute(callback);
+}
+
 rtclient.RealtimeLoader.prototype.downloadFile = function(file, callback) {
   console.log("FILE:");
   console.log(file);

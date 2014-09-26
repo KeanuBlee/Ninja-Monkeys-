@@ -25,9 +25,12 @@
   <!-- Undo and redo buttons. -->
   <button id="undoButton" disabled>Undo</button>
   <button id="redoButton" disabled>Redo</button>
+  <button id="saveButton" onclick="realtimeLoader.saveFile(string.getText(),alert('done saving'))">Save</button>
 
   <script>
   var realtimeLoader=null;
+  var currentDocument=null;
+  var string=null;
     /**
      * This function is called the first time that the Realtime model is created
      * for a file. This function should be used to initialize any values of the
@@ -42,7 +45,6 @@
       var string = model.createString(realtimeLoader.oldText);
       model.getRoot().set("text", string);
     }
-
     /**
      * This function is called when the Realtime file has been loaded. It should
      * be used to initialize any user interface components and event handlers
@@ -51,8 +53,9 @@
      * @param doc {gapi.drive.realtime.Document} the Realtime document.
      */
     function onFileLoaded(doc) {
+      currentDocument=doc;
       console.log('we are loading a file');
-      var string = doc.getModel().getRoot().get('text');
+      string = doc.getModel().getRoot().get('text');
       console.log('we have a string obj');
 
       // Keeping one box updated with a String binder.
