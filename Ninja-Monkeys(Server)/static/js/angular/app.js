@@ -5,7 +5,7 @@
         this.products = options;
         this.currentOption = this.products[0].modename;
         this.setOption = function(val){
-            change(this.products[val].modename);
+            changeMode(this.products[val].modename);
             this.currentOption = this.products[val].modename;
         };
     });

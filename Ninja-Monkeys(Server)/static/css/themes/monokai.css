@@ -10,7 +10,7 @@
 
 .cm-s-monokai span.cm-comment {color: #95959e;}
 .cm-s-monokai span.cm-atom {color: #F2B50F;} /* Yellow */
-.cm-s-monokai span.cm-number {color: #F90101;} /* Red */
+.cm-s-monokai span.cm-number {color: #00933B;} /* Green */
 
 .cm-s-monokai span.cm-property, .cm-s-monokai span.cm-attribute {color: #00933B;} /* Green */
 .cm-s-monokai span.cm-keyword {color: #0266C8;} /* Blue */

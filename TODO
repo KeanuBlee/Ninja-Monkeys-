@@ -1,0 +1,15 @@
+TODO:
+
+Backend:
+1: Make the 2 way data binding work between codemirror and realtime api.
+2: Allow for the user to edit the name of the file.
+3: Allow for hotkey ctrl+s to save & add in auto save
+4: Make server handle stylesheets
+5: Remove the need for the authenticate button & undo / redo
+6: Cross browser testing
+7: Refactor Codebase
+
+Frontend:
+1: Add in all the functions that we want to the dropdowns with empty functions
+2: Add in key binding views
+3: Angular JS magic for themes dropdown (eliminate giant html)
