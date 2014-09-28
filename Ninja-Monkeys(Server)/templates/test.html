@@ -353,6 +353,10 @@
       currentDocument=doc;
       console.log('we are loading a file');
       string = doc.getModel().getRoot().get('text');
+      string.removeEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, applyRealtimeDiffToCm, false);
+      string.removeEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, applyRealtimeDiffToCm, false);
+      // string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, applyRealtimeDiffToCm);
+      // string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, applyRealtimeDiffToCm);
       console.log('we have a string obj');
 
       // Keeping one box updated with a String binder.
@@ -461,13 +465,55 @@
       }
     }
 
+    function onLocalEdit(document, change){
+      applyCmDiffToRealtime(change);
+    }
+
     CodeMirror.modeURL = "../mode/%N/%N.js";
+    CodeMirror.commands.save = saveFile;
 
     editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
       lineNumbers: true,
       theme: 'monokai',
       mode: 'python',
     });
+
+    editor.on("change", onLocalEdit);
+
+    function applyCmDiffToRealtime(change){
+      var start = editor.indexFromPos(change.from);
+      var end = editor.indexFromPos(change.to);
+      // can be an insertion, deletion or replacement
+      // insertion removes nothing, inserts
+      // deletion deletes and the then inserts nothing
+      // replacement deletes and then inserts 
+      if(start!=end){
+        string.removeRange(start, end);
+      }
+      if(String(change.text)){
+        console.log(String(change.text));
+        string.insertString(start,String(change.text));
+      }
+    }
+
+    function applyRealtimeDiffToCm(change){
+      var start = change.index
+      var end = start + change.text.length
+      var startPos = editor.posFromIndex(start);
+      var endPos = editor.posFromIndex(end);
+
+      if(change.type == gapi.drive.realtime.EventType.TEXT_INSERTED){
+        console.log("REALTIME: ");
+        console.log(change.text);
+        editor.replaceRange(change.text, start, end, "+insert");
+      }
+      else if(change.type == gapi.drive.realtime.EventType.TEXT_DELETED){
+        editor.replaceRange("", start, end, "+delete");
+      }
+      else {
+        console.log("Unknown change type.");
+      }
+    }
 
   </script>
 </body>
