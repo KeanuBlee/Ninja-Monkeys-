@@ -144,7 +144,7 @@
   <!-- END IMPORT MODES -->
 
   </head>
-  <body style="font-family: Arial" ng-controller = "LanguageController as language" onLoad='startRealtime()' onkeydown="updateTextFromEditor()">
+  <body style="font-family: Arial" ng-controller = "LanguageController as language" onLoad='startRealtime()'>
     <div class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
 
@@ -355,8 +355,6 @@
       string = doc.getModel().getRoot().get('text');
       string.removeEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, applyRealtimeDiffToCm, false);
       string.removeEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, applyRealtimeDiffToCm, false);
-      // string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, applyRealtimeDiffToCm);
-      // string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, applyRealtimeDiffToCm);
       console.log('we have a string obj');
 
       // Keeping one box updated with a String binder.
@@ -366,7 +364,7 @@
       // Keeping one box updated with a custom EventListener.
       // Enabling UI Elements.
       textArea.disabled = false;
-      updateEditorFromText();
+      setInitialText();
       // Add logic for undo button.
       var model = doc.getModel();
       var undoButton = document.getElementById('undoButton');
@@ -385,6 +383,7 @@
         redoButton.disabled = !e.canRedo;
       };
       model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
+      
     }
 
     /**
@@ -451,12 +450,11 @@
       editor.setOption("theme", theme);
     }
 
-    function updateTextFromEditor(){
-      string.setText(editor.getValue());
-    }
-
-    function updateEditorFromText(){
+    function setInitialText(){
       editor.setValue(string.getText());
+      string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, applyRealtimeDiffToCm);
+      string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, applyRealtimeDiffToCm);
+      editor.on("beforeChange", onLocalEdit);
     }
 
     function changeMode(mode) {
@@ -478,8 +476,6 @@
       mode: 'python',
     });
 
-    editor.on("change", onLocalEdit);
-
     function applyCmDiffToRealtime(change){
       var start = editor.indexFromPos(change.from);
       var end = editor.indexFromPos(change.to);
@@ -487,33 +483,45 @@
       // insertion removes nothing, inserts
       // deletion deletes and the then inserts nothing
       // replacement deletes and then inserts 
+      console.log(change);
       if(start!=end){
+        console.log("removing");
         string.removeRange(start, end);
       }
       if(String(change.text)){
-        console.log(String(change.text));
-        string.insertString(start,String(change.text));
+        if(String(change.text)==","){
+          console.log("damn");
+        }
+        var changes = change.text.join("\n");
+        // console.log(String(change.text));
+        string.insertString(start,changes);
+        console.log(changes);
       }
     }
 
     function applyRealtimeDiffToCm(change){
-      var start = change.index
-      var end = start + change.text.length
-      var startPos = editor.posFromIndex(start);
-      var endPos = editor.posFromIndex(end);
+      if(!change.isLocal){
+        editor.off("beforeChange", onLocalEdit);
+        var start = change.index
+        var end = start + change.text.length
+        var startPos = editor.posFromIndex(start);
+        var endPos = editor.posFromIndex(end);
 
-      if(change.type == gapi.drive.realtime.EventType.TEXT_INSERTED){
-        console.log("REALTIME: ");
-        console.log(change.text);
-        editor.replaceRange(change.text, start, end, "+insert");
-      }
-      else if(change.type == gapi.drive.realtime.EventType.TEXT_DELETED){
-        editor.replaceRange("", start, end, "+delete");
-      }
-      else {
-        console.log("Unknown change type.");
+        if(change.type == gapi.drive.realtime.EventType.TEXT_INSERTED){
+          console.log("REALTIME: ");
+          console.log(change.text);
+          editor.replaceRange(String(change.text), startPos);
+        }
+        else if(change.type == gapi.drive.realtime.EventType.TEXT_DELETED){
+          editor.replaceRange("", startPos, endPos);
+        }
+        else {
+          console.log("Unknown change type.");
+        }
+        editor.on("beforeChange", onLocalEdit);
       }
     }
+      
 
   </script>
 </body>
