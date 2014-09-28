@@ -8,6 +8,7 @@ Backend:
 5: Remove the need for the authenticate button & undo / redo
 6: Cross browser testing
 7: Refactor Codebase
+8: Add https
 
 Frontend:
 1: Add in all the functions that we want to the dropdowns with empty functions
