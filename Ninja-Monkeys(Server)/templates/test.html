@@ -1,478 +1,501 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="myModule">
-	<head>
+  <head>
 
-        <!-- BEGIN IMPORT THEMES -->
+  <script type="text/javascript"
+          src="https://apis.google.com/js/api.js"></script>
 
-		<link rel="stylesheet" type="text/css" href="static/css/themes/3024-day.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/monokai.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/ambiance.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/cobalt.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/eclipse.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/elegant.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/erlang-dark.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/lesser-dark.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/mbo.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/mdn-like.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/midnight.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/neat.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/neo.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/night.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/paraiso-dark.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/paraiso-light.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/pastel-on-dark.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/rubyblue.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/solarized.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/the-matrix.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/tomorrow-night-eighties.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/twilight.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/vibrant-ink.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/xq-dark.css">
-		<link rel="stylesheet" type="text/css" href="static/css/themes/xq-light.css">
+  <script type="text/javascript"
+          src="static/realtime-client-utils.js"></script>
 
-        <!-- END IMPORT THEMES -->
+  <script type="text/javascript"
+          src="static/js/codemirror/codemirror.js"></script>
 
-        <link rel="stylesheet" type="text/css" href="static/css/codemirror/codemirror.css">
-        <link rel="stylesheet" type="text/css" href="static/css/bootstrap/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="static/css/bootstrap/bootstrap-theme.css">
-        <link rel="stylesheet" type="text/css" href="static/css/droid_sans_mono/stylesheet.css">
- 		<script src="static/js/codemirror/codemirror.js"></script>
-		<script src="static/js/angular/angular.min.js"></script>
-		<script src="static/js/angular/app.js"></script>
-        <script src="http://code.jquery.com/jquery.js"></script>
-        <script src="static/js/bootstrap/bootstrap.js"></script>
+  <script type="text/javascript"
+          src="static/js/angular/angular.min.js"></script>
 
-        <!-- BEGIN IMPORT MODES -->
+  <script type="text/javascript"
+          src="static/js/angular/app.js"></script>
 
-        <script src="static/js/modes/apl.js"></script>
-        <script src="static/js/modes/asterisk.js"></script>
-        <script src="static/js/modes/clike.js"></script>
-        <script src="static/js/modes/clojure.js"></script>
-        <script src="static/js/modes/cobol.js"></script>
-        <script src="static/js/modes/coffeescript.js"></script>
-        <script src="static/js/modes/commonlisp.js"></script>
-        <script src="static/js/modes/css.js"></script>
-        <script src="static/js/modes/cypher.js"></script>
-        <script src="static/js/modes/d.js"></script>
-        <script src="static/js/modes/diff.js"></script>
-        <script src="static/js/modes/django.js"></script>
-        <script src="static/js/modes/dtd.js"></script>
-        <script src="static/js/modes/dylan.js"></script>
-        <script src="static/js/modes/ecl.js"></script>
-        <script src="static/js/modes/eiffel.js"></script>
-        <script src="static/js/modes/erlang.js"></script>
-        <script src="static/js/modes/fortran.js"></script>
-        <script src="static/js/modes/gas.js"></script>
-        <script src="static/js/modes/gfm.js"></script>
-        <script src="static/js/modes/gherkin.js"></script>
-        <script src="static/js/modes/go.js"></script>
-        <script src="static/js/modes/groovy.js"></script>
-        <script src="static/js/modes/haml.js"></script>
-        <script src="static/js/modes/haskell.js"></script>
-        <script src="static/js/modes/haxe.js"></script>
-        <script src="static/js/modes/htmlembedded.js"></script>
-        <script src="static/js/modes/htmlmixed.js"></script>
-        <script src="static/js/modes/http.js"></script>
-        <script src="static/js/modes/jade.js"></script>
-        <script src="static/js/modes/javascript.js"></script>
-        <script src="static/js/modes/jinja2.js"></script>
-        <script src="static/js/modes/julia.js"></script>
-        <script src="static/js/modes/kotlin.js"></script>
-        <script src="static/js/modes/livescript.js"></script>
-        <script src="static/js/modes/lua.js"></script>
-        <script src="static/js/modes/markdown.js"></script>
-        <script src="static/js/modes/mirc.js"></script>
-        <script src="static/js/modes/mllike.js"></script>
-        <script src="static/js/modes/modelica.js"></script>
-        <script src="static/js/modes/nginx.js"></script>
-        <script src="static/js/modes/ntriples.js"></script>
-        <script src="static/js/modes/octave.js"></script>
-        <script src="static/js/modes/pascal.js"></script>
-        <script src="static/js/modes/pegjs.js"></script>
-        <script src="static/js/modes/perl.js"></script>
-        <script src="static/js/modes/php.js"></script>
-        <script src="static/js/modes/pig.js"></script>
-        <script src="static/js/modes/properties.js"></script>
-        <script src="static/js/modes/puppet.js"></script>
-        <script src="static/js/modes/python.js"></script>
-        <script src="static/js/modes/q.js"></script>
-        <script src="static/js/modes/r.js"></script>
-        <script src="static/js/modes/rpm.js"></script>
-        <script src="static/js/modes/rst.js"></script>
-        <script src="static/js/modes/ruby.js"></script>
-        <script src="static/js/modes/rust.js"></script>
-        <script src="static/js/modes/sass.js"></script>
-        <script src="static/js/modes/scheme.js"></script>
-        <script src="static/js/modes/shell.js"></script>
-        <script src="static/js/modes/sieve.js"></script>
-        <script src="static/js/modes/slim.js"></script>
-        <script src="static/js/modes/smalltalk.js"></script>
-        <script src="static/js/modes/smarty.js"></script>
-        <script src="static/js/modes/smartymixed.js"></script>
-        <script src="static/js/modes/solr.js"></script>
-        <script src="static/js/modes/sparql.js"></script>
-        <script src="static/js/modes/sql.js"></script>
-        <script src="static/js/modes/stex.js"></script>
-        <script src="static/js/modes/tcl.js"></script>
-        <script src="static/js/modes/toml.js"></script>
-        <script src="static/js/modes/turtle.js"></script>
-        <script src="static/js/modes/vb.js"></script>
-        <script src="static/js/modes/vbscript.js"></script>
-        <script src="static/js/modes/velocity.js"></script>
-        <script src="static/js/modes/verilog.js"></script>
-        <script src="static/js/modes/xml.js"></script>
-        <script src="static/js/modes/xquery.js"></script>
-        <script src="static/js/modes/yaml.js"></script>
-        <script src="static/js/modes/z80.js"></script>
+  <script type="text/javascript"
+          src="http://code.jquery.com/jquery.js"></script>
 
-        <!-- END IMPORT MODES -->
+  <script type="text/javascript"
+          src="static/js/bootstrap/bootstrap.js"></script>
 
-  		<script>
-  			var changeTheme = function(theme) {
-  				editor.setOption("theme", theme);
-  			}
-  		</script>
+  <!-- BEGIN IMPORT THEMES -->
 
-	</head>
-	<body style="font-family: Arial" ng-controller = "LanguageController as language" onkeypress="onLocalEdit()">
-		<div class="navbar navbar-default navbar-static-top" role="navigation">
-	      <div class="container">
-	        <div class="navbar-header">
-	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-	            <span class="sr-only">Toggle navigation</span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	            <span class="icon-bar"></span>
-	          </button>
-	          <a class="navbar-brand" id="title" onclick="renameFile()" href="javascript:void(0);">Untitled...</a>
-	        </div>
+  <link rel="stylesheet" type="text/css" href="static/css/themes/3024-day.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/monokai.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/ambiance.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/cobalt.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/eclipse.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/elegant.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/erlang-dark.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/lesser-dark.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/mbo.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/mdn-like.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/midnight.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/neat.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/neo.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/night.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/paraiso-dark.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/paraiso-light.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/pastel-on-dark.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/rubyblue.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/solarized.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/the-matrix.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/tomorrow-night-eighties.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/twilight.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/vibrant-ink.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/xq-dark.css">
+  <link rel="stylesheet" type="text/css" href="static/css/themes/xq-light.css">
 
-	        <div class="navbar-collapse collapse">
-	          <ul class="nav navbar-nav">
-	           <li class="dropdown">
-	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">File <span class="caret"></span></a>
-	              <ul class="dropdown-menu" role="menu">
-	                <li class="dropdown"><a onclick="s.showSettingsDialog()" href="javascript:void(0);">Share...</a></li>
-	                <li class="divider"/>
-	                <li>
-	                	<a href="#">New...</a>
-	                </li>
-	                <li>
-	                	<a href="#">Open</a>
-	               	</li>
-	                <li>
-	                	<a href="#"> Rename</a>
-	                </li>
-	                <li class="dropdown-header">
-	                	Nav header
-	                </li>
-	                <li>
-	                	<a href="#">Separated link</a>
-	                </li>
-	                <li>
-	                	<a href="#">One more separated link</a>
-	                </li>
-	              </ul>
-	            </li>
-	            <li>
-	            	<a href="#about">Edit</a>
-	            </li>
-	            <li>
-	            	<a href="#contact">Contact</a>
-	            </li>
-	            <li class="dropdown">
-	              <a href="" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
-	              <ul class="dropdown-menu" role="menu">
-	              <li>
-	                <li class="dropdown-submenu">
-    					<a tabindex="-1" href="">Themes</a>
-    					<ul class="dropdown-menu scrollable-menu">
-      						<li>
-      							<a href="#" onclick=changeTheme('monokai')>Default</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('3024-day')>3024 day</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('3024-night')>3024 night</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('ambiance')>Ambiance</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('base16-dark')>Base16 dark</a>
-      						</li>
-      						<li>
-      							<a href="#"onclick=changeTheme('base16-light')>Base16 light</a>
-      						</li>
-      						<li>
-      							<a href="#"onclick=changeTheme('blackboard')>Blackboard</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('cobalt')>Cobalt
-      							</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('eclipse')>Eclipse
-      							</a>
-      						</li>
-      						<li> 
-      							<a href="#" onclick=changeTheme('elegant')>Elegant
-      							</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('erlang-dark')>Erlang Dark</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('lesser-dark')>Lesser Dark</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('mbo')>MBO</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('mdn-like')>MDN-like</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('midnight')> Midnight</a>
-      						</li>
-      						<li>
-      							<a href="#" onclick=changeTheme('neat')> Neat </a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('neo')> Neo</a>
-      						</li>
-      						<li> 
-      							<a href='#' onclick=changeTheme('night')>Night</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('paraiso-dark')>Paraiso-Dark</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('paraiso-light')> Paraiso Light</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('pastel-on-dark')> Pastel On Dark</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('rubyblue')>RubyBlue</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('solarized')>Solarized</a>
-      						</li>
-      						<li> 
-      							<a href='#' onclick=changeTheme('the-matrix')>The Matrix</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('tomorrow-night-eighties')> Tomorrow Night Eighties </a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('twilight')> Twilight</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('vibrant-ink')>Vibrant Ink</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('xq-dark')>XQ Dark</a>
-      						</li>
-      						<li>
-      							<a href='#' onclick=changeTheme('xq-light')>XQ Light</a>
-      						</li>
-      					</ul>
-  					</li>
-  					<li class="dropdown-submenu">
-  					<a href=''>Language</a>
-  						 <ul class="dropdown-menu scrollable-menu" role="menu">
-	                <li class="dropdown">
-	                	<li ng-repeat="product in language.products" ng-click = "language.setOption($index)">
-	                	<a href="#">{{product.name}}</a></li>
-		            </li>
-		            </ul>
-  					</li>
-	              </ul>
-	            </li>
-	          </ul>
-	          <ul class="nav navbar-nav navbar-right">
-	            <li>
-	            	<a href="../navbar/">Default</a>
-	            </li>
-	            <li class="active">
-	            	<a href="./">Static top</a>
-	            </li>
-	            <li>
-	            	<a href="../navbar-fixed-top/">Fixed top</a>
-	            </li>
-	          </ul>
-	        </div><!--/.nav-collapse -->
-	      </div>
-	    </div>
-		<div class="col-md-2" id="myUselessDivs"></div>
-		<div class="col-md-8">
-			<div id="mydiv">
-			<textarea id="myTextArea" class="form-control" rows="3" ></textarea> 
-		<div style="font-family: droid_sans_monoregular">
-			</div>
-		</div>
-		</div>
-		<div class="col-md-2" id="myUselessDivs2"></div>
+  <!-- END IMPORT THEMES -->
+
+  <link rel="stylesheet" type="text/css" href="static/css/codemirror/codemirror.css">
+  <link rel="stylesheet" type="text/css" href="static/css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="static/css/bootstrap/bootstrap-theme.css">
+  <link rel="stylesheet" type="text/css" href="static/css/droid_sans_mono/stylesheet.css">
+
+  <!-- BEGIN IMPORT MODES -->
+
+  <script src="static/js/modes/apl.js"></script>
+  <script src="static/js/modes/asterisk.js"></script>
+  <script src="static/js/modes/clike.js"></script>
+  <script src="static/js/modes/clojure.js"></script>
+  <script src="static/js/modes/cobol.js"></script>
+  <script src="static/js/modes/coffeescript.js"></script>
+  <script src="static/js/modes/commonlisp.js"></script>
+  <script src="static/js/modes/css.js"></script>
+  <script src="static/js/modes/cypher.js"></script>
+  <script src="static/js/modes/d.js"></script>
+  <script src="static/js/modes/diff.js"></script>
+  <script src="static/js/modes/django.js"></script>
+  <script src="static/js/modes/dtd.js"></script>
+  <script src="static/js/modes/dylan.js"></script>
+  <script src="static/js/modes/ecl.js"></script>
+  <script src="static/js/modes/eiffel.js"></script>
+  <script src="static/js/modes/erlang.js"></script>
+  <script src="static/js/modes/fortran.js"></script>
+  <script src="static/js/modes/gas.js"></script>
+  <script src="static/js/modes/gfm.js"></script>
+  <script src="static/js/modes/gherkin.js"></script>
+  <script src="static/js/modes/go.js"></script>
+  <script src="static/js/modes/groovy.js"></script>
+  <script src="static/js/modes/haml.js"></script>
+  <script src="static/js/modes/haskell.js"></script>
+  <script src="static/js/modes/haxe.js"></script>
+  <script src="static/js/modes/htmlembedded.js"></script>
+  <script src="static/js/modes/htmlmixed.js"></script>
+  <script src="static/js/modes/http.js"></script>
+  <script src="static/js/modes/jade.js"></script>
+  <script src="static/js/modes/javascript.js"></script>
+  <script src="static/js/modes/jinja2.js"></script>
+  <script src="static/js/modes/julia.js"></script>
+  <script src="static/js/modes/kotlin.js"></script>
+  <script src="static/js/modes/livescript.js"></script>
+  <script src="static/js/modes/lua.js"></script>
+  <script src="static/js/modes/markdown.js"></script>
+  <script src="static/js/modes/mirc.js"></script>
+  <script src="static/js/modes/mllike.js"></script>
+  <script src="static/js/modes/modelica.js"></script>
+  <script src="static/js/modes/nginx.js"></script>
+  <script src="static/js/modes/ntriples.js"></script>
+  <script src="static/js/modes/octave.js"></script>
+  <script src="static/js/modes/pascal.js"></script>
+  <script src="static/js/modes/pegjs.js"></script>
+  <script src="static/js/modes/perl.js"></script>
+  <script src="static/js/modes/php.js"></script>
+  <script src="static/js/modes/pig.js"></script>
+  <script src="static/js/modes/properties.js"></script>
+  <script src="static/js/modes/puppet.js"></script>
+  <script src="static/js/modes/python.js"></script>
+  <script src="static/js/modes/q.js"></script>
+  <script src="static/js/modes/r.js"></script>
+  <script src="static/js/modes/rpm.js"></script>
+  <script src="static/js/modes/rst.js"></script>
+  <script src="static/js/modes/ruby.js"></script>
+  <script src="static/js/modes/rust.js"></script>
+  <script src="static/js/modes/sass.js"></script>
+  <script src="static/js/modes/scheme.js"></script>
+  <script src="static/js/modes/shell.js"></script>
+  <script src="static/js/modes/sieve.js"></script>
+  <script src="static/js/modes/slim.js"></script>
+  <script src="static/js/modes/smalltalk.js"></script>
+  <script src="static/js/modes/smarty.js"></script>
+  <script src="static/js/modes/smartymixed.js"></script>
+  <script src="static/js/modes/solr.js"></script>
+  <script src="static/js/modes/sparql.js"></script>
+  <script src="static/js/modes/sql.js"></script>
+  <script src="static/js/modes/stex.js"></script>
+  <script src="static/js/modes/tcl.js"></script>
+  <script src="static/js/modes/toml.js"></script>
+  <script src="static/js/modes/turtle.js"></script>
+  <script src="static/js/modes/vb.js"></script>
+  <script src="static/js/modes/vbscript.js"></script>
+  <script src="static/js/modes/velocity.js"></script>
+  <script src="static/js/modes/verilog.js"></script>
+  <script src="static/js/modes/xml.js"></script>
+  <script src="static/js/modes/xquery.js"></script>
+  <script src="static/js/modes/yaml.js"></script>
+  <script src="static/js/modes/z80.js"></script>
+
+  <!-- END IMPORT MODES -->
+
+  </head>
+  <body style="font-family: Arial" ng-controller = "LanguageController as language" onLoad='startRealtime()' onkeydown="updateTextFromEditor()">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" id="title" onclick="renameFile()" href="javascript:void(0);">Untitled...</a>
+          </div>
+
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">File <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li class="dropdown"><a onclick="s.showSettingsDialog()" href="javascript:void(0);">Share...</a></li>
+                  <li class="divider"/>
+                  <li>
+                    <a href="#">New...</a>
+                  </li>
+                  <li>
+                    <a href="#">Open</a>
+                  </li>
+                  <li>
+                    <a href="#"> Rename</a>
+                  </li>
+                  <li class="dropdown-header">
+                    Nav header
+                  </li>
+                  <li>
+                    <a href="#">Separated link</a>
+                  </li>
+                  <li>
+                    <a href="#">One more separated link</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <a href="#about">Edit</a>
+              </li>
+
+              <li>
+                <a href="#contact">Contact</a>
+              </li>
+
+              <li class="dropdown">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">View<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <li>
+                  <li class="dropdown-submenu">
+              <a tabindex="-1" href="">Themes</a>
+              <ul class="dropdown-menu scrollable-menu">
+                  <li>
+                    <a href="#" onclick=changeTheme('monokai')>Default</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('3024-day')>3024 day</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('3024-night')>3024 night</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('ambiance')>Ambiance</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('base16-dark')>Base16 dark</a>
+                  </li>
+                  <li>
+                    <a href="#"onclick=changeTheme('base16-light')>Base16 light</a>
+                  </li>
+                  <li>
+                    <a href="#"onclick=changeTheme('blackboard')>Blackboard</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('cobalt')>Cobalt
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('eclipse')>Eclipse
+                    </a>
+                  </li>
+                  <li> 
+                    <a href="#" onclick=changeTheme('elegant')>Elegant
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('erlang-dark')>Erlang Dark</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('lesser-dark')>Lesser Dark</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('mbo')>MBO</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('mdn-like')>MDN-like</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('midnight')> Midnight</a>
+                  </li>
+                  <li>
+                    <a href="#" onclick=changeTheme('neat')> Neat </a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('neo')> Neo</a>
+                  </li>
+                  <li> 
+                    <a href='#' onclick=changeTheme('night')>Night</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('paraiso-dark')>Paraiso-Dark</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('paraiso-light')> Paraiso Light</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('pastel-on-dark')> Pastel On Dark</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('rubyblue')>RubyBlue</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('solarized')>Solarized</a>
+                  </li>
+                  <li> 
+                    <a href='#' onclick=changeTheme('the-matrix')>The Matrix</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('tomorrow-night-eighties')> Tomorrow Night Eighties </a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('twilight')> Twilight</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('vibrant-ink')>Vibrant Ink</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('xq-dark')>XQ Dark</a>
+                  </li>
+                  <li>
+                    <a href='#' onclick=changeTheme('xq-light')>XQ Light</a>
+                  </li>
+                </ul>
+            </li>
+
+            <li class="dropdown-submenu">
+            <a href=''>Language</a>
+               <ul class="dropdown-menu scrollable-menu" role="menu">
+                  <li class="dropdown">
+                    <li ng-repeat="product in language.products" ng-click = "language.setOption($index)">
+                    <a href="#">{{product.name}}</a></li>
+                </li>
+                </ul>
+            </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="../navbar/">Default</a>
+              </li>
+              <li class="active">
+                <a href="./">Static top</a>
+              </li>
+              <li>
+                <a href="../navbar-fixed-top/">Fixed top</a>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    <!-- <div class="col-md-2" id="myUselessDivs"></div> -->
+    <div style="width: 100%">
+    <!--  <div class="col-md-8" style="margin: 0 auto"> -->
+      <div style="margin: 0 auto">
+        <div id="mydiv" style="margin: 0 auto">
+          <textarea id="editor" disabled></textarea> 
+            <div style="font-family: droid_sans_monoregular">
+            </div>
+        </div>
+      </div>
+    </div>
+  <button id="authorizeButton" disabled>You must authorize</button>
+  <button id="undoButton" disabled>Undo</button>
+  <button id="redoButton" disabled>Redo</button>
+  <button id="saveButton" onclick="saveFile()">Save</button>
+    <!-- <div class="col-md-2" id="myUselessDivs2"></div> -->
+
 <script>
+  var realtimeLoader=null;
+  var currentDocument=null;
+  var string=null;
+  var editor=null;
 
+  function saveFile() {
+    realtimeLoader.saveFile(string.getText(),console.log("done saving"));
+  }
+    /**
+     * This function is called the first time that the Realtime model is created
+     * for a file. This function should be used to initialize any values of the
+     * model. In this case, we just create the single string model that will be
+     * used to control our text box. The string has a starting value of 'Hello
+     * Realtime World!', and is named 'text'.
+     * @param model {gapi.drive.realtime.Model} the Realtime root model object.
+     */
+    function initializeModel(model) {
+      // console.log("initializing model: " + model);
+      // console.log(realtimeLoader.oldText);
+      var string = model.createString(realtimeLoader.oldText);
+      model.getRoot().set("text", string);
+    }
+    /**
+     * This function is called when the Realtime file has been loaded. It should
+     * be used to initialize any user interface components and event handlers
+     * depending on the Realtime model. In this case, create a text control binder
+     * and bind it to our string model that we created in initializeModel.
+     * @param doc {gapi.drive.realtime.Document} the Realtime document.
+     */
+    function onFileLoaded(doc) {
+      currentDocument=doc;
+      console.log('we are loading a file');
+      string = doc.getModel().getRoot().get('text');
+      console.log('we have a string obj');
 
-      var clientId = '280415793865-3ft5uf9bd05t0kah0c4oikgl7uksss17.apps.googleusercontent.com';
-      var developerKey = 'AIzaSyCoPnxgF_zOdkcXy3NqVfT8VajFOnfwBs8';
-      var accessToken;
-      var current_doc_id = '<%<id>%>';
-      var current_doc=null;
-      var oldValue = "";
-      var EDIT_MODE = false;
+      // Keeping one box updated with a String binder.
+      var textArea = document.getElementById('editor');
+      // gapi.drive.realtime.databinding.bindString(string, textArea);
 
+      // Keeping one box updated with a custom EventListener.
+      // Enabling UI Elements.
+      textArea.disabled = false;
+      updateEditorFromText();
+      // Add logic for undo button.
+      var model = doc.getModel();
+      var undoButton = document.getElementById('undoButton');
+      var redoButton = document.getElementById('redoButton');
 
-      function onApiLoad() {
-        gapi.load('auth:client,drive-realtime,drive-share', authenticateWithGoogle);
-        if(current_doc_id==''){
-          gapi.load('picker');
-        }
+      undoButton.onclick = function(e) {
+        model.undo();
+      };
+      redoButton.onclick = function(e) {
+        model.redo();
+      };
+
+      // Add event handler for UndoRedoStateChanged events.
+      var onUndoRedoStateChanged = function(e) {
+        undoButton.disabled = !e.canUndo;
+        redoButton.disabled = !e.canRedo;
+      };
+      model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
+    }
+
+    /**
+     * Options for the Realtime loader.
+     */
+    var realtimeOptions = {
+      /**
+       * Client ID from the console.
+       */
+      clientId: '280415793865-3ft5uf9bd05t0kah0c4oikgl7uksss17.apps.googleusercontent.com',
+
+      /**
+       * The ID of the button to click to authorize. Must be a DOM element ID.
+       */
+      authButtonElementId: 'authorizeButton',
+
+      /**
+       * Function to be called when a Realtime model is first created.
+       */
+      initializeModel: initializeModel,
+
+      /**
+       * Autocreate files right after auth automatically.
+       */
+      autoCreate: false,
+
+      /**
+       * The name of newly created Drive files.
+       */
+      defaultTitle: "Untitled",
+
+      /**
+       * The MIME type of newly created Drive Files. By default the application
+       * specific MIME type will be used:
+       *     application/vnd.google-apps.drive-sdk.
+       */
+      newFileMimeType: null, // Using default.
+
+      /**
+       * Function to be called every time a Realtime file is loaded.
+       */
+      onFileLoaded: onFileLoaded,
+
+      /**
+       * Function to be called to inityalize custom Collaborative Objects types.
+       */
+      registerTypes: null, // No action.
+
+      /**
+       * Function to be called after authorization and before loading files.
+       */
+      afterAuth: null // No action.
+    }
+
+    /**
+     * Start the Realtime loader with the options.
+     */
+    function startRealtime() {
+      realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
+      realtimeLoader.start();
+    }
+
+    var changeTheme = function(theme) {
+      editor.setOption("theme", theme);
+    }
+
+    function updateTextFromEditor(){
+      string.setText(editor.getValue());
+    }
+
+    function updateEditorFromText(){
+      editor.setValue(string.getText());
+    }
+
+    function changeMode(mode) {
+      if (mode.length = null){
+        editor.setOption("mode", modeInput.value);
+          CodeMirror.autoLoadMode(editor, modeInput.value);
       }
-
-      function authenticateWithGoogle() {
-        window.gapi.auth.authorize({
-          'client_id': clientId,
-          'scope': ['https://www.googleapis.com/auth/drive']
-        }, handleAuthentication);
+      else {
+        editor.setOption("mode", mode);
+        CodeMirror.autoLoadMode(editor, mode);
       }
+    }
 
-      function handleAuthentication(result) {
-        if(result && !result.error) {
-          accessToken = result.access_token;
-          gapi.client.load('drive', 'v2',setupPicker);
-        }
-      }
+    CodeMirror.modeURL = "../mode/%N/%N.js";
 
-      function setupPicker() {
-        if(current_doc_id==''){
-          var picker = new google.picker.PickerBuilder()
-            .setOAuthToken(accessToken)
-            .setDeveloperKey(developerKey)
-            .addView(new google.picker.DocsView())
-            .setCallback(setupRealtime)
-            .build();
-          picker.setVisible(true);
-        } else {
-          setupRealtime();
-        }
-      }
+    editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+      lineNumbers: true,
+      theme: 'monokai',
+      mode: 'python'
+    });
 
-      function setupRealtime(data) {
-        if(data.docs!=null){
-          current_doc_id = data.docs[0].id;
-        }
-        if(current_doc_id!=''){
-          gapi.drive.realtime.load(current_doc_id, onFileLoaded, initializeModel);
-        }
-      }
-
-      function initializeModel(model) {
-        var request = gapi.client.drive.files.get({
-          'fileId': current_doc_id
-          });
-        request.execute(function(resp) {
-         downloadFile(resp,model, finishInit); 
-        });
-      }
-
-      function downloadFile(file, model, callback) {
-        if (file.downloadUrl) {
-          var accessToken = gapi.auth.getToken().access_token;
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', file.downloadUrl);
-          xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-          xhr.onload = function() {
-            callback(xhr.responseText, model);
-          };
-          xhr.onerror = function() {
-            callback(null, null);
-          };
-          xhr.send();
-        } else {
-          callback(null, null);
-        }
-      }
-
-      function finishInit(info, model){
-        oldValue=info;
-        var string = model.createString(oldValue);
-        model.getRoot().set("text", string);
-      }
-
-      function onFileLoaded(doc, callback){
-        var code = doc.getModel().getRoot().get('text');
-        // code.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, onLocalEdit);
-        // code.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, onLocalEdit);
-        current_doc=doc;
-        EDIT_MODE=true;
-        onRemoteEdit(null); 
-      }
-      
-      function log(info){
-        console.log(info);
-      }
-
-      function onRemoteEdit(evt){
-        if(EDIT_MODE==true){
-          log("onRemoteEdit");
-
-          if(current_doc.getModel().getRoot().get('text')!=undefined){
-            // if(current_doc.getModel().getRoot().get('text').getText()!=undefined){
-            //   editor.setValue(current_doc.getModel().getRoot().get('text').getText());
-            // } else {
-              console.log(current_doc.getModel().getRoot());
-              console.log(current_doc.getModel().getRoot().get('text'));
-              editor.setValue(current_doc.getModel().getRoot().get('text'));
-            // }
-          } 
-        }
-      }
-      function onLocalEdit(evt){
-        if(EDIT_MODE==true){
-          log("onLocalEdit");
-          current_doc.getModel().getRoot().set('text', editor.getValue());
-        }
-      }
-
-      function saveToDrive(){
-        if(EDIT_MODE==true){
-          var xmlhttpp = new XMLHttpRequest();
-          xmlhttpp.open("PUSH","https://www.googleapis.com/upload/drive/v2/files/"+current_doc_id,false);
-          xmlhttpp.setRequestHeader('Content-Type', 'media');
-          xmlhttpp.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-          xmlhttpp.setRequestHeader('Access-Control-Allow-Origin', 'https://www.googleapis.com/upload/drive/v2/files/' + current_doc_id);
-          xmlhttpp.send();
-        }
-      }
-
-      CodeMirror.modeURL = "../mode/%N/%N.js";
-
-          var editor = CodeMirror.fromTextArea(document.getElementById("myTextArea"), {
-            lineNumbers: true,
-            theme: 'monokai',
-            mode: 'python'
-          });
-          CodeMirror.on(modeInput, "keypress", function(e) {
-            if (e.keyCode == 13) change();
-          });
-          // editor.setOption('onChange', function(info1, info2){console.log("yo");} );
-          function change(mode) {
-            if (mode.length = null){
-              editor.setOption("mode", modeInput.value);
-                CodeMirror.autoLoadMode(editor, modeInput.value);
-            }
-              else {
-                editor.setOption("mode", mode);
-                CodeMirror.autoLoadMode(editor, mode);
-              }
-          }
-
+    CodeMirror.on(modeInput, "keypress", function(e) {
+      if (e.keyCode == 13) changeMode();
+    });
 
   </script>
-<script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
 </body>
 </html>

@@ -25,12 +25,15 @@
   <!-- Undo and redo buttons. -->
   <button id="undoButton" disabled>Undo</button>
   <button id="redoButton" disabled>Redo</button>
-  <button id="saveButton" onclick="realtimeLoader.saveFile(string.getText(),alert('done saving'))">Save</button>
+  <button id="saveButton" onclick="saveFile()">Save</button>
 
   <script>
   var realtimeLoader=null;
   var currentDocument=null;
   var string=null;
+  function saveFile() {
+    realtimeLoader.saveFile(string.getText(),console.log("done saving"));
+  }
     /**
      * This function is called the first time that the Realtime model is created
      * for a file. This function should be used to initialize any values of the
