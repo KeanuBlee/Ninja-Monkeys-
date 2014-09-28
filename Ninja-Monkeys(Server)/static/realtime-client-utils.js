@@ -66,7 +66,6 @@ rtclient.DEVELOPER_KEY = 'AIzaSyCoPnxgF_zOdkcXy3NqVfT8VajFOnfwBs8';
 rtclient.getParams = function() {
   var params = {};
   var queryFragment = window.location.search;
-  console.log(queryFragment);
   if (!queryFragment) {
     queryFragment = window.location.hash;
   }
@@ -75,7 +74,6 @@ rtclient.getParams = function() {
     for (var i = 0; i < paramStrs.length; i++) {
       var paramStr = paramStrs[i].split("=");
       params[paramStr[0]] = unescape(paramStr[1]);
-      console.log(paramStr[0] + ": " + unescape(paramStr[1]));
     }
   }
   return params;
@@ -295,7 +293,7 @@ rtclient.RealtimeLoader = function(options) {
  */
 rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   var params = [];
-  console.log(fileIds);
+  // console.log(fileIds);
   if (fileIds) {
     console.log("we have file ids");
     params.push('fileIds=' + fileIds.join(','));
@@ -304,8 +302,6 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
     console.log("we have user id");
     params.push('userId=' + userId);
   }
-  alert('redirect');
-
   // Naive URL construction.
   var newUrl = params.length == 0 ? './' : ('./#' + params.join('&'));
   console.log(newUrl);
@@ -462,7 +458,7 @@ function updateFile(fileId, fileMetadata, fileString, callback) {
       'body': multipartRequestBody});
   if (!callback) {
     callback = function(file) {
-      console.log(file)
+      console.log(file);
     };
   }
   request.execute(callback);

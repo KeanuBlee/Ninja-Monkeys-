@@ -2,11 +2,12 @@
     var app = angular.module('myModule', []);
 
     app.controller("LanguageController", function(){
-        this.products = options;
-        this.currentOption = this.products[0].modename;
+        this.modes = options;
+        this.currentOption = this.modes[0].modename;
         this.setOption = function(val){
-            changeMode(this.products[val].modename);
-            this.currentOption = this.products[val].modename;
+          console.log(this.modes[val].modename);
+            changeMode(this.modes[val].modename);
+            this.currentOption = this.modes[val].modename;
         };
     });
 
