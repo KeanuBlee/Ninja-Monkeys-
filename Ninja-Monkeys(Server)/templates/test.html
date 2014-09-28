@@ -326,7 +326,9 @@
   var editor=null;
 
   function saveFile() {
-    realtimeLoader.saveFile(string.getText(),console.log("done saving"));
+    realtimeLoader.saveFile(string.getText(),function(){
+      console.log("File Saved");
+    });
   }
     /**
      * This function is called the first time that the Realtime model is created
@@ -477,31 +479,32 @@
     });
 
     function applyCmDiffToRealtime(change){
-      var start = editor.indexFromPos(change.from);
-      var end = editor.indexFromPos(change.to);
-      // can be an insertion, deletion or replacement
-      // insertion removes nothing, inserts
-      // deletion deletes and the then inserts nothing
-      // replacement deletes and then inserts 
-      console.log(change);
-      if(start!=end){
-        console.log("removing");
-        string.removeRange(start, end);
-      }
-      if(String(change.text)){
-        if(String(change.text)==","){
-          console.log("damn");
+      if(change.origin!="realtime"){
+        var start = editor.indexFromPos(change.from);
+        var end = editor.indexFromPos(change.to);
+        // can be an insertion, deletion or replacement
+        // insertion removes nothing, inserts
+        // deletion deletes and the then inserts nothing
+        // replacement deletes and then inserts 
+        console.log(change);
+        if(start!=end){
+          console.log("removing");
+          string.removeRange(start, end);
         }
-        var changes = change.text.join("\n");
-        // console.log(String(change.text));
-        string.insertString(start,changes);
-        console.log(changes);
+        if(String(change.text)){
+          if(String(change.text)==","){
+            console.log("damn");
+          }
+          var changes = change.text.join("\n");
+          // console.log(String(change.text));
+          string.insertString(start,changes);
+          console.log(changes);
+        }
       }
     }
 
     function applyRealtimeDiffToCm(change){
       if(!change.isLocal){
-        editor.off("beforeChange", onLocalEdit);
         var start = change.index
         var end = start + change.text.length
         var startPos = editor.posFromIndex(start);
@@ -510,15 +513,14 @@
         if(change.type == gapi.drive.realtime.EventType.TEXT_INSERTED){
           console.log("REALTIME: ");
           console.log(change.text);
-          editor.replaceRange(String(change.text), startPos);
+          editor.replaceRange(String(change.text), startPos, null, "realtime");
         }
         else if(change.type == gapi.drive.realtime.EventType.TEXT_DELETED){
-          editor.replaceRange("", startPos, endPos);
+          editor.replaceRange("", startPos, endPos, "realtime");
         }
         else {
           console.log("Unknown change type.");
         }
-        editor.on("beforeChange", onLocalEdit);
       }
     }
       
