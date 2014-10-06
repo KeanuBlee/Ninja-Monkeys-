@@ -9,18 +9,23 @@
 		<p style="font-size: 30px">
 			Check out my text box
 		</p>
-		<div id="mydiv" style="height: 300px; border: solid #888888 1.5px; border-radius: 4px; padding: 1px">
+		<div class="row">
+		<div iclass="col-md-3" id="myUselessDivs"></div>
+		<div class="col-md-6">
+			<div id="mydiv">
 			<textarea id="myTextArea"></textarea> 
 		</div>
 		<div style="font-family: droid_sans_monoregular">
 			<script> 
 				var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
 					lineNumbers: true,
-					theme: 'monokai'
+					theme: 'monokai',
+					height:100%
 
 
 				});
 			</script>
+
 		</div>
 
 
