@@ -1,7 +1,7 @@
 TODO:
 
 Backend:
-1: Make the 2 way data binding work between codemirror and realtime api.
+[DONE] 1: Make the 2 way data binding work between codemirror and realtime api.
 2: Allow for the user to edit the name of the file.
 3: Allow for hotkey ctrl+s to save & add in auto save
 4: Make server handle stylesheets
