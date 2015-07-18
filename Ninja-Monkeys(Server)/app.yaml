@@ -3,7 +3,6 @@ version: dev-1
 runtime: python27
 api_version: 1
 threadsafe: false
-secure: always
 
 
 
@@ -13,6 +12,7 @@ handlers:
 - url: /.*
   script: ninjamonkeys.app
   login: required
+  secure: always
 
 
 
