@@ -145,7 +145,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
       _this.fetchUserId(onAuthComplete);
     } else {
       _this.authButton.disabled = false;
-      _this.authButton.onclick = authorizeWithPopup;
+      authorizeWithPopup();
     }
   };
 
@@ -246,7 +246,7 @@ rtclient.parseState = function(stateParam) {
   }
 }
 
-rtclient.setupPicker = function(pickerCallback, callback) {
+rtclient.setupPicker = function(pickerCallback) {
   gapi.load('picker', function(){
     rtclient.picker = new google.picker.PickerBuilder()
       .setOAuthToken(gapi.auth.getToken().access_token)
@@ -254,8 +254,7 @@ rtclient.setupPicker = function(pickerCallback, callback) {
       .addView(new google.picker.DocsView())
       .setCallback(pickerCallback)
       .build();
-    rtclient.picker.setVisible(false);
-    callback();
+    rtclient.picker.setVisible(true);
   });
 }
 
@@ -395,18 +394,15 @@ rtclient.RealtimeLoader.prototype.load = function() {
   // no parameters so use a picker
   else {
     console.log('using picker');
-    self=this;
     rtclient.setupPicker(function(data){
-      console.log([data.docs[0].id]);
-      fileIds = [data.docs[0].id];
-      self.redirectTo(fileIds, rtclient.params['userId']);
-    }, function(){
-      rtclient.picker.setVisible(true);
+      if (data.docs) {
+        rtclient.picker.setVisible(false);
+        console.log("picker triggered");
+        console.log([data.docs[0].id]);
+        fileIds = [data.docs[0].id];
+        self.redirectTo(fileIds, rtclient.params['userId']);
+      }
     });
-  }
-
-  if (this.autoCreate) {
-    this.createNewFileAndRedirect();
   }
 }
 rtclient.RealtimeLoader.prototype.getFile = function(callback){

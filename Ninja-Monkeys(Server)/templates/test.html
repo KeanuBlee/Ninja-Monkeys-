@@ -317,9 +317,9 @@
         </div>
       </div>
     </div>
-  <button id="authorizeButton" disabled>You must authorize</button>
-  <button id="undoButton" disabled>Undo</button>
-  <button id="redoButton" disabled>Redo</button>
+  <button id="authorizeButton" hidden>authorize</button>
+  <button id="undoButton" disabled hidden>Undo</button>
+  <button id="redoButton" disabled hidden>Redo</button>
     <!-- <div class="col-md-2" id="myUselessDivs2"></div> -->
 
 <script>
@@ -327,6 +327,7 @@
   var currentDocument=null;
   var string=null;
   var editor=null;
+  var auth=false;
 
   function saveFile() {
     realtimeLoader.saveFile(string.getText(),function(){
@@ -368,7 +369,7 @@
 
       // Keeping one box updated with a custom EventListener.
       // Enabling UI Elements.
-      textArea.disabled = false;
+      textArea.hidden = false;
       setInitialText();
       // Add logic for undo button.
       var model = doc.getModel();
@@ -391,77 +392,23 @@
       
     }
 
-    /**
-     * Options for the Realtime loader.
-     */
     var realtimeOptions = {
-      /**
-       * Client ID from the console.
-       */
       clientId: '280415793865-3ft5uf9bd05t0kah0c4oikgl7uksss17.apps.googleusercontent.com',
-
-      /**
-       * The ID of the button to click to authorize. Must be a DOM element ID.
-       */
       authButtonElementId: 'authorizeButton',
-
-      /**
-       * Function to be called when a Realtime model is first created.
-       */
       initializeModel: initializeModel,
-
-      /**
-       * Autocreate files right after auth automatically.
-       */
       autoCreate: false,
-
-      /**
-       * The name of newly created Drive files.
-       */
       defaultTitle: "Untitled",
-
-      /**
-       * The MIME type of newly created Drive Files. By default the application
-       * specific MIME type will be used:
-       *     application/vnd.google-apps.drive-sdk.
-       */
       newFileMimeType: null, // Using default.
-
-      /**
-       * Function to be called every time a Realtime file is loaded.
-       */
       onFileLoaded: onFileLoaded,
-
-      /**
-       * Function to be called to inityalize custom Collaborative Objects types.
-       */
       registerTypes: null, // No action.
-
-      /**
-       * Function to be called after authorization and before loading files.
-       */
-      afterAuth: null // No action.
+      afterAuth: afterAuth // No action.
     }
 
-    /**
-     * Start the Realtime loader with the options.
-     */
-    // function loadFile(filename, filetype){
-    //  if (filetype=="js"){
-    //   var fileref=document.createElement('script')
-    //   fileref.setAttribute("type","text/javascript")
-    //   fileref.setAttribute("src", filename)
-    //   console.log(filename);
-    //  }
-    //  else if (filetype=="css"){
-    //   var fileref=document.createElement("link")
-    //   fileref.setAttribute("rel", "stylesheet")
-    //   fileref.setAttribute("type", "text/css")
-    //   fileref.setAttribute("href", filename)
-    //  }
-    //  if (typeof fileref!="undefined")
-    //   document.getElementsByTagName("head")[0].appendChild(fileref)
-    // }
+    function afterAuth() {
+      auth=true;
+      setupCodeMirror();
+      console.log("load wrapper");
+    }
 
     function startRealtime() {
       realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
@@ -490,14 +437,18 @@
       applyCmDiffToRealtime(change);
     }
 
-    CodeMirror.modeURL = "../mode/%N/%N.js";
-    CodeMirror.commands.save = saveFile;
+    function setupCodeMirror() {
+      CodeMirror.modeURL = "../mode/%N/%N.js";
+      CodeMirror.commands.save = saveFile;
 
-    editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-      lineNumbers: true,
-      theme: 'monokai',
-      mode: 'python',
-    });
+      editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+        lineNumbers: true,
+        theme: 'monokai',
+        mode: 'python',
+      });
+
+      editor.disabled = false;
+    }
 
     function applyCmDiffToRealtime(change){
       if(change.origin!="realtime"){
@@ -544,8 +495,6 @@
         }
       }
     }
-      
-
   </script>
 </body>
 </html>

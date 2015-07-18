@@ -11,22 +11,9 @@ import urlparse
 import json
 from google.appengine.api import users
 from google.appengine.ext import ndb
-# import enchant
 
 LOADER = jinja2.FileSystemLoader(os.path.dirname(__file__))
 jinja_environment = jinja2.Environment(loader = LOADER, block_start_string='<%',block_end_string='%>',variable_start_string='<%<', variable_end_string='>%>')
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# DATA STRUCTURES / CLASSES
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-# class ExampleClass(ndb.Model):
-    # data
-    # methods
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# HANDLERS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 class HomeHandler(webapp2.RequestHandler):    
     def get(self):
@@ -37,10 +24,6 @@ class HomeHandler(webapp2.RequestHandler):
         template_values={'id': ''}
       template = jinja_environment.get_template('templates/test.html')
       self.response.out.write(template.render(template_values))
-        
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-# SEND TO HANDLERS
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 routes = [
     ('.*', HomeHandler), 
